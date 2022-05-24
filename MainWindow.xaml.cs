@@ -39,7 +39,7 @@ namespace Задание__2
                     var txt = new TextBox();
                     txt.Style = (Style)this.FindResource("MyTextBox");
                     txt.Text = matrix.getMatrix(i, j).ToString();
-                    txt.FontSize = 12 + 15 - count;
+                    txt.FontSize = 27 - count;
                     MatrixGrid.Children.Add(txt);
                 }
             }
@@ -118,23 +118,23 @@ namespace Задание__2
 
         public delegate bool Function(int row, int column);
 
-        private void HighlightMainDiagonal(object sender, MouseEventArgs e)     => this.Highlight(bool (int row, int column) => (row == column), (Style)this.FindResource("MyHighlightTextBox"));
-        private void ReturnMainDiagonal(object sender, MouseEventArgs e)        => this.Highlight(bool (int row, int column) => (row == column), (Style)this.FindResource("MyTextBox"));
+        private void HighlightMainDiagonal(object sender, MouseEventArgs e)     => this.Highlight(matrix.mainD, (Style)this.FindResource("MyHighlightTextBox"));
+        private void ReturnMainDiagonal(object sender, MouseEventArgs e)        => this.Highlight(matrix.mainD, (Style)this.FindResource("MyTextBox"));
 
-        private void HighlightSideDiagonal(object sender, MouseEventArgs e)     => this.Highlight(bool (int row, int column) => (column == (matrix.count - row - 1)), (Style)this.FindResource("MyHighlightTextBox"));
-        private void ReturnSideDiagonal(object sender, MouseEventArgs e)        => this.Highlight(bool (int row, int column) => (column == (matrix.count - row - 1)), (Style)this.FindResource("MyTextBox"));
+        private void HighlightSideDiagonal(object sender, MouseEventArgs e)     => this.Highlight(matrix.sideD, (Style)this.FindResource("MyHighlightTextBox"));
+        private void ReturnSideDiagonal(object sender, MouseEventArgs e)        => this.Highlight(matrix.sideD, (Style)this.FindResource("MyTextBox"));
 
-        private void HighlightBottomTriangle(object sender, MouseEventArgs e)   => this.Highlight(bool (int row, int column) => (row >= matrix.count / 2 && row < matrix.count && column >= matrix.count - row - 1 && column <= row), (Style)this.FindResource("MyHighlightTextBox"));
-        private void ReturnBottomTriangle(object sender, MouseEventArgs e)      => this.Highlight(bool (int row, int column) => (row >= matrix.count / 2 && row < matrix.count && column >= matrix.count - row - 1 && column <= row), (Style)this.FindResource("MyTextBox"));
+        private void HighlightBottomTriangle(object sender, MouseEventArgs e)   => this.Highlight(matrix.bottomT, (Style)this.FindResource("MyHighlightTextBox"));
+        private void ReturnBottomTriangle(object sender, MouseEventArgs e)      => this.Highlight(matrix.bottomT, (Style)this.FindResource("MyTextBox"));
 
-        private void HighlightTopTriangle(object sender, MouseEventArgs e)      => this.Highlight(bool (int row, int column) => (row < (matrix.count / 2 + 1) && column >= row && column <= (matrix.count - row - 1)), (Style)this.FindResource("MyHighlightTextBox"));
-        private void ReturnTopTriangle(object sender, MouseEventArgs e)         => this.Highlight(bool (int row, int column) => (row < (matrix.count / 2 + 1) && column >= row && column <= (matrix.count - row - 1)), (Style)this.FindResource("MyTextBox"));
+        private void HighlightTopTriangle(object sender, MouseEventArgs e)      => this.Highlight(matrix.topT, (Style)this.FindResource("MyHighlightTextBox"));
+        private void ReturnTopTriangle(object sender, MouseEventArgs e)         => this.Highlight(matrix.topT, (Style)this.FindResource("MyTextBox"));
 
-        private void HighlightRightTriangle(object sender, MouseEventArgs e)    => this.Highlight(bool (int row, int column) => (column < matrix.count && column >= matrix.count / 2 && row >= (matrix.count - column - 1) && row <= column), (Style)this.FindResource("MyHighlightTextBox"));
-        private void ReturnRightTriangle(object sender, MouseEventArgs e)       => this.Highlight(bool (int row, int column) => (column < matrix.count && column >= matrix.count / 2 && row >= (matrix.count - column - 1) && row <= column), (Style)this.FindResource("MyTextBox"));
+        private void HighlightRightTriangle(object sender, MouseEventArgs e)    => this.Highlight(matrix.rightT, (Style)this.FindResource("MyHighlightTextBox"));
+        private void ReturnRightTriangle(object sender, MouseEventArgs e)       => this.Highlight(matrix.rightT, (Style)this.FindResource("MyTextBox"));
 
-        private void HighlightLeftTriangle(object sender, MouseEventArgs e)    => this.Highlight(bool (int row, int column) => (column < (matrix.count / 2 + 1) && row >= column && row <= (matrix.count - column - 1)), (Style)this.FindResource("MyHighlightTextBox"));
-        private void ReturnLeftTriangle(object sender, MouseEventArgs e)       => this.Highlight(bool (int row, int column) => (column < (matrix.count / 2 + 1) && row >= column && row <= (matrix.count - column - 1)), (Style)this.FindResource("MyTextBox"));
+        private void HighlightLeftTriangle(object sender, MouseEventArgs e)    => this.Highlight(matrix.leftT, (Style)this.FindResource("MyHighlightTextBox"));
+        private void ReturnLeftTriangle(object sender, MouseEventArgs e)       => this.Highlight(matrix.leftT, (Style)this.FindResource("MyTextBox"));
 
         private MainWindow Highlight(Function func, Style style)
         {
@@ -160,7 +160,11 @@ namespace Задание__2
             this.Highlight(bool (int row, int column) => true, (Style)this.FindResource("MyTextBox"));
         }
 
-        private void BoxKeyDown(object sender, KeyEventArgs e) { if (e.Key == Key.Enter) { this.reset(); } }
+        private void BoxKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter) { this.reset(); }
+            else if (e.Key == Key.Escape) { Keyboard.ClearFocus(); }
+        }
 
         private void Exit(object sender, RoutedEventArgs e)     => Application.Current.Shutdown();
 

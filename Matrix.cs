@@ -52,13 +52,20 @@ namespace Задание__2
             return new[]{summa, maximal, minimal}.ToArray();
         }
 
-        public int[] getSideDiagonal()   => this.getDataFromMatrix(bool (int row, int column) => (column == this.count - row - 1 && column != this.count && row != this.count));
-        public int[] getMainDiagonal()   => this.getDataFromMatrix(bool (int row, int column) => (row == column && column != this.count && row != this.count));
+        public bool sideD(int row, int column)             => (column == this.count - row - 1 && column != this.count && row != this.count);
+        public bool mainD(int row, int column)             => (row == column && column != this.count && row != this.count);
+        public bool topT(int row, int column)              => (row < (this.count / 2 + 1) && column >= row && column <= (this.count - row - 1));
+        public bool bottomT(int row, int column)           => (row >= this.count / 2 && row < this.count && column >= this.count - row - 1 && column <= row);
+        public bool leftT(int row, int column)             => (column < (this.count / 2 + 1) && row >= column && row <= (this.count - column - 1));
+        public bool rightT(int row, int column)            => (column < this.count && column >= this.count / 2 && row >= (this.count - column - 1) && row <= column);
 
-        public int[] getTopTriangle()    => this.getDataFromMatrix(bool (int row, int column) => (row < (this.count / 2 + 1) && column >= row && column <= (this.count - row - 1)) );
-        public int[] getBottomTriangle() => this.getDataFromMatrix(bool (int row, int column) => (row >= this.count / 2 && row < this.count && column >= this.count - row - 1 && column <= row) );
-        public int[] getLeftTriangle()   => this.getDataFromMatrix(bool (int row, int column) => (column < (this.count / 2 + 1) && row >= column && row <= (this.count - column - 1)) );
-        public int[] getRightTriangle()  => this.getDataFromMatrix(bool (int row, int column) => (column < this.count && column >= this.count / 2 && row >= (this.count - column - 1) && row <= column) );
+        public int[] getSideDiagonal()   => this.getDataFromMatrix(this.sideD);
+        public int[] getMainDiagonal()   => this.getDataFromMatrix(this.mainD);
+
+        public int[] getTopTriangle()    => this.getDataFromMatrix(this.topT);
+        public int[] getBottomTriangle() => this.getDataFromMatrix(this.bottomT);
+        public int[] getLeftTriangle()   => this.getDataFromMatrix(this.leftT);
+        public int[] getRightTriangle()  => this.getDataFromMatrix(this.rightT);
 
         // public int[] getTopTriangle()
         // {
